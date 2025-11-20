@@ -65,8 +65,7 @@ async function named() {
     // ...Metamask is installed...
     publicClient = createPublicClient({
       chain: mainnet,
-      transport: http(), // this line works, not the below
-      // transport: custom(window.ethereum),
+      transport: http(),
     });
     console.log("public client created from named() in bcn-index.js");
     tokenCode = tokenCodeInput.value;
@@ -140,10 +139,8 @@ async function renameIt() {
   // now:
   try {
     publicClient = createPublicClient({
-      chain: mainnet, // adding this here instead of in simulateContract()
-      // transport: custom(window.ethereum), // ContractFunctionExecutionError:
-      // ...The contract function "modName" reverted.
-      transport: http(), // try'g this i/o the one above
+      chain: mainnet,
+      transport: http(),
     });
     console.log("public client created from renameIt()");
     const { request } = await publicClient.simulateContract({
@@ -156,9 +153,7 @@ async function renameIt() {
     });
     console.log("simulated contract from renameIt()");
     await walletClient.switchChain({ id: 1 });
-    const hash = await walletClient.writeContract(request); // until above line, ContractFunctionExecutionError:
-    // ...The current chain of the wallet (id: 11155111) does not match...
-    // ...the target chain for the transaction (id: 1 – Ethereum).
+    const hash = await walletClient.writeContract(request);
     console.log(hash);
   } catch (error) {
     console.log(error);
@@ -171,20 +166,16 @@ async function nameIt() {
   // now:
   try {
     publicClient = createPublicClient({
-      // transport: custom(window.ethereum), // copying renameIt()'s
       chain: mainnet,
       transport: http(),
     });
     console.log("public client created from nameIt()");
 
-    // color in hexadecimal form:
+    // art tech in a codified form:
     tokenCode = tokenCodeInput.value;
     console.log(tokenCode);
 
-    // hexadecimal form could have lower case or upper case numerals (F / f),
-    // which increases the number of checks to set pricing,
-    // i.e., if not careful, could get white, as "FFFfff", for cheap...
-    // color in decimal form:
+    // art tech in decimal form:
     tokenId = await publicClient.readContract({
       address: contractAddress,
       abi: abi,
