@@ -11,7 +11,7 @@ import { contractAddress, abi } from "./bcn-constants.js";
 // grab website elements
 const greetingSpan = document.getElementById("greetingSpan");
 const connectButton = document.getElementById("connectButton");
-const colorInput = document.getElementById("roInput");
+const tokenCodeInput = document.getElementById("tokenCodeInput");
 const namedButton = document.getElementById("namedButton");
 const currentNameSpan = document.getElementById("currentNameSpan");
 const currentOwnerSpan = document.getElementById("currentOwnerSpan");
@@ -29,7 +29,7 @@ const ownerIsMeDiv = document.getElementById("ownerIsMeDiv");
 let walletClient;
 let publicClient;
 
-let colorhex;
+let tokenCode;
 let tokenId;
 let tokenName;
 let tokenOwner;
@@ -69,21 +69,21 @@ async function named() {
       // transport: custom(window.ethereum),
     });
     console.log("public client created from named() in bcn-index.js");
-    colorhex = colorInput.value.substring(1);
-    console.log(colorhex);
+    tokenCode = tokenCodeInput.value;
+    console.log(tokenCode);
     // let's try to get the token's name & owner
     try {
       tokenName = await publicClient.readContract({
         address: contractAddress,
         abi: abi,
-        functionName: "getName",
-        args: [colorhex],
+        functionName: "getTokenName",
+        args: [tokenCode],
       });
       tokenOwner = await publicClient.readContract({
         address: contractAddress,
         abi: abi,
-        functionName: "getOwner",
-        args: [colorhex],
+        functionName: "getTokenOwner",
+        args: [tokenCode],
       });
       // ...if we made it this far, inputs were valid, and token exists...
       // let's show the token's name & owner
@@ -150,8 +150,8 @@ async function renameIt() {
       account: connectedAccount,
       address: contractAddress,
       abi: abi,
-      functionName: "modName",
-      args: [colorInput.value.substring(1), renameInput.value],
+      functionName: "modTokenName",
+      args: [tokenCodeInput.value, renameInput.value],
       chain: mainnet,
     });
     console.log("simulated contract from renameIt()");
@@ -178,8 +178,8 @@ async function nameIt() {
     console.log("public client created from nameIt()");
 
     // color in hexadecimal form:
-    colorhex = colorInput.value.substring(1);
-    console.log(colorhex);
+    tokenCode = tokenCodeInput.value;
+    console.log(tokenCode);
 
     // hexadecimal form could have lower case or upper case numerals (F / f),
     // which increases the number of checks to set pricing,
@@ -189,7 +189,7 @@ async function nameIt() {
       address: contractAddress,
       abi: abi,
       functionName: "aGetId",
-      args: [colorhex],
+      args: [tokenCode],
     });
     console.log("did aGetId()");
     console.log(tokenId);
@@ -197,18 +197,7 @@ async function nameIt() {
     // set price:
     price = parseEther("0.001");
     console.log("Price set to 0.001 ETH.");
-    if (
-      tokenId == 255 ||
-      tokenId == 65280 ||
-      tokenId == 16711680 ||
-      tokenId == 65535 ||
-      tokenId == 16711935 ||
-      tokenId == 16776960
-    ) {
-      price = parseEther("1");
-      console.log("Price set to 1 ETH!");
-    }
-    if (tokenId == 0 || tokenId == 16777215) {
+    if (tokenId == 0 || tokenId == 65535) {
       price = parseEther("10");
       console.log("Price set to 10 ETH!!");
     }
@@ -220,7 +209,7 @@ async function nameIt() {
       address: contractAddress,
       abi: abi,
       functionName: "setToken",
-      args: [colorhex, nameInput.value],
+      args: [tokenCode, nameInput.value],
       value: price,
       chain: mainnet,
     });
@@ -239,7 +228,7 @@ async function nameIt() {
     // ...is the error about insufficient funds...
     if (
       error.message.includes("insufficient") ||
-      error.message.includes("NeedMoreFundsForThisColor")
+      error.message.includes("NeedMoreFundsForThis")
     ) {
       // ...ah, right, not enough funds...
       poorDiv.hidden = false; // ...get richer, then retry
