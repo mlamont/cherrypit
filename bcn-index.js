@@ -11,7 +11,7 @@ import { contractAddress, abi } from "./bcn-constants.js";
 // grab website elements
 const greetingSpan = document.getElementById("greetingSpan");
 const connectButton = document.getElementById("connectButton");
-const colorInput = document.getElementById("colorInput");
+const colorInput = document.getElementById("roInput");
 const namedButton = document.getElementById("namedButton");
 const currentNameSpan = document.getElementById("currentNameSpan");
 const currentOwnerSpan = document.getElementById("currentOwnerSpan");

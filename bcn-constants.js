@@ -1,4 +1,4 @@
-export const contractAddress = "0x1A17C3096dda65a8f9C53D0F8fcB831f9F66b927"; // color.rockopera.eth
+export const contractAddress = "0x78D69B155839862FF8c442F6eFEA373b20757980"; // design.rockopera.eth
 export const abi = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
@@ -62,15 +62,13 @@ export const abi = [
     type: "error",
   },
   { inputs: [], name: "FailedCall", type: "error" },
-  { inputs: [], name: "InvalidColorhex", type: "error" },
+  { inputs: [], name: "InvalidDesignxo", type: "error" },
   { inputs: [], name: "InvalidInitialization", type: "error" },
   { inputs: [], name: "InvalidTokenId", type: "error" },
   { inputs: [], name: "InvalidTokenName", type: "error" },
   {
-    inputs: [
-      { internalType: "uint256", name: "colorMintPrice", type: "uint256" },
-    ],
-    name: "NeedMoreFundsForThisColor",
+    inputs: [{ internalType: "uint256", name: "mintPrice", type: "uint256" }],
+    name: "NeedMoreFundsForThisToken",
     type: "error",
   },
   { inputs: [], name: "NotInitializing", type: "error" },
@@ -196,13 +194,13 @@ export const abi = [
       {
         indexed: true,
         internalType: "string",
-        name: "oldName",
+        name: "oldTokenName",
         type: "string",
       },
       {
         indexed: true,
         internalType: "string",
-        name: "newName",
+        name: "newTokenName",
         type: "string",
       },
       {
@@ -212,7 +210,7 @@ export const abi = [
         type: "uint256",
       },
     ],
-    name: "Rename",
+    name: "TokenRename",
     type: "event",
   },
   {
@@ -278,7 +276,7 @@ export const abi = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "string", name: "colorhex", type: "string" }],
+    inputs: [{ internalType: "string", name: "designxo", type: "string" }],
     name: "aGetId",
     outputs: [{ internalType: "uint256", name: "n", type: "uint256" }],
     stateMutability: "pure",
@@ -317,21 +315,21 @@ export const abi = [
   },
   {
     inputs: [{ internalType: "uint256", name: "n", type: "uint256" }],
-    name: "getColorhex",
-    outputs: [{ internalType: "string", name: "colorhex", type: "string" }],
+    name: "getDesignxo",
+    outputs: [{ internalType: "string", name: "designxo", type: "string" }],
     stateMutability: "pure",
     type: "function",
   },
   {
-    inputs: [{ internalType: "string", name: "colorhex", type: "string" }],
-    name: "getName",
+    inputs: [{ internalType: "string", name: "designxo", type: "string" }],
+    name: "getTokenName",
     outputs: [{ internalType: "string", name: "tokenName", type: "string" }],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [{ internalType: "string", name: "colorhex", type: "string" }],
-    name: "getOwner",
+    inputs: [{ internalType: "string", name: "designxo", type: "string" }],
+    name: "getTokenOwner",
     outputs: [{ internalType: "address", name: "tokenOwner", type: "address" }],
     stateMutability: "view",
     type: "function",
@@ -357,20 +355,20 @@ export const abi = [
   },
   {
     inputs: [
-      { internalType: "string", name: "colorhex", type: "string" },
-      { internalType: "string", name: "newName", type: "string" },
+      { internalType: "string", name: "designxo", type: "string" },
+      { internalType: "string", name: "newTokenName", type: "string" },
     ],
-    name: "modName",
+    name: "modTokenName",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
     inputs: [
-      { internalType: "string", name: "colorhex", type: "string" },
-      { internalType: "address", name: "newOwner", type: "address" },
+      { internalType: "string", name: "designxo", type: "string" },
+      { internalType: "address", name: "newTokenOwner", type: "address" },
     ],
-    name: "modOwner",
+    name: "modTokenOwner",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -383,7 +381,7 @@ export const abi = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "string", name: "colorhex", type: "string" }],
+    inputs: [{ internalType: "string", name: "designxo", type: "string" }],
     name: "nixToken",
     outputs: [],
     stateMutability: "nonpayable",
@@ -452,8 +450,8 @@ export const abi = [
   },
   {
     inputs: [
-      { internalType: "string", name: "colorhex", type: "string" },
-      { internalType: "string", name: "name", type: "string" },
+      { internalType: "string", name: "designxo", type: "string" },
+      { internalType: "string", name: "tokenName", type: "string" },
     ],
     name: "setToken",
     outputs: [],
