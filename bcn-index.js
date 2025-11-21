@@ -25,6 +25,23 @@ const ownerIsSomebodyDiv = document.getElementById("ownerIsSomebodyDiv");
 const ownerIsNotMeDiv = document.getElementById("ownerIsNotMeDiv");
 const ownerIsMeDiv = document.getElementById("ownerIsMeDiv");
 
+const s00 = document.getElementById("square00");
+const s01 = document.getElementById("square01");
+const s02 = document.getElementById("square02");
+const s03 = document.getElementById("square03");
+const s04 = document.getElementById("square04");
+const s05 = document.getElementById("square05");
+const s06 = document.getElementById("square06");
+const s07 = document.getElementById("square07");
+const s08 = document.getElementById("square08");
+const s09 = document.getElementById("square09");
+const s10 = document.getElementById("square10");
+const s11 = document.getElementById("square11");
+const s12 = document.getElementById("square12");
+const s13 = document.getElementById("square13");
+const s14 = document.getElementById("square14");
+const s15 = document.getElementById("square15");
+
 // initialize viem pieces
 let walletClient;
 let publicClient;
@@ -68,7 +85,26 @@ async function named() {
       transport: http(),
     });
     console.log("public client created from named() in bcn-index.js");
-    tokenCode = tokenCodeInput.value;
+    // tokenCode = tokenCodeInput.value;
+
+    // let's create that tokenCode from all the checkboxes
+    tokenCode = s00.checked ? "x" : "o";
+    tokenCode += s01.checked ? "x" : "o";
+    tokenCode += s02.checked ? "x" : "o";
+    tokenCode += s03.checked ? "x" : "o";
+    tokenCode += s04.checked ? "x" : "o";
+    tokenCode += s05.checked ? "x" : "o";
+    tokenCode += s06.checked ? "x" : "o";
+    tokenCode += s07.checked ? "x" : "o";
+    tokenCode += s08.checked ? "x" : "o";
+    tokenCode += s09.checked ? "x" : "o";
+    tokenCode += s10.checked ? "x" : "o";
+    tokenCode += s11.checked ? "x" : "o";
+    tokenCode += s12.checked ? "x" : "o";
+    tokenCode += s13.checked ? "x" : "o";
+    tokenCode += s14.checked ? "x" : "o";
+    tokenCode += s15.checked ? "x" : "o";
+
     console.log(tokenCode);
     // let's try to get the token's name & owner
     try {
@@ -148,7 +184,7 @@ async function renameIt() {
       address: contractAddress,
       abi: abi,
       functionName: "modTokenName",
-      args: [tokenCodeInput.value, renameInput.value],
+      args: [tokenCode, renameInput.value],
       chain: mainnet,
     });
     console.log("simulated contract from renameIt()");
@@ -172,7 +208,7 @@ async function nameIt() {
     console.log("public client created from nameIt()");
 
     // art tech in a codified form:
-    tokenCode = tokenCodeInput.value;
+    // tokenCode = tokenCodeInput.value;
     console.log(tokenCode);
 
     // art tech in decimal form:
